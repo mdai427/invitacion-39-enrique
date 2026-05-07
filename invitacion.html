@@ -223,20 +223,21 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
 .badge-lbl{font-size:.55rem;letter-spacing:3px;color:var(--gold-l);text-transform:uppercase;}
 
 .hero-info-strip{
-  display:flex;align-items:center;justify-content:center;gap:12px;
+  display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:nowrap;
   background:rgba(0,0,0,.6);
   border:1px solid rgba(212,175,55,.3);
-  border-radius:30px;
-  padding:10px 20px;
-  margin:12px auto 0;
-  max-width:340px;
+  border-radius:40px;
+  padding:14px 28px;
+  margin:16px auto 0;
+  max-width:min(600px,92vw);
+  white-space:nowrap;
   animation:fadeUp .8s .75s ease both;
   backdrop-filter:blur(6px);
 }
-.info-item{text-align:center;}
-.info-label{font-size:.7rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:block;}
-.info-val{font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:1px;}
-.info-sep{color:rgba(212,175,55,.4);font-size:1.2rem;}
+.info-item{text-align:center;display:flex;flex-direction:column;align-items:center;}
+.info-label{font-size:.85rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:block;}
+.info-val{font-size:1.45rem;font-weight:700;color:#fff;letter-spacing:1px;}
+.info-sep{color:rgba(212,175,55,.6);font-size:1.8rem;font-weight:300;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
 
@@ -623,6 +624,10 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
         <div class="poster-label"><div class="poster-name">JENNI RIVERA</div></div>
       </div>
       <div class="poster-card">
+        <img src="images/alejandro.png" alt="Alejandro Fernández" loading="eager">
+        <div class="poster-label"><div class="poster-name">ALEJANDRO FERNÁNDEZ</div></div>
+      </div>
+      <div class="poster-card">
         <img src="images/juangabriel.png" alt="Juan Gabriel" loading="eager">
         <div class="poster-label"><div class="poster-name">JUAN GABRIEL</div></div>
       </div>
@@ -682,7 +687,7 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
       <div class="dc-item"><span class="dc-emoji">✨</span><div class="dc-text">Look Western</div></div>
     </div>
     <div class="dc-badge">🤠 Vaquero / Vaquera 🤠</div>
-    <p style="margin-top:14px;font-size:.75rem;color:rgba(255,255,255,.45);font-style:italic;">¡El look más vaquero se lleva un premio! 🏆</p>
+    <p style="margin-top:18px;font-size:1.2rem;font-weight:700;color:var(--gold);font-style:italic;text-shadow:0 0 18px rgba(212,175,55,.6);letter-spacing:1px;">¡El look más vaquero se lleva un premio! 🏆</p>
   </section>
 
   <!-- SONGS -->
@@ -809,11 +814,10 @@ function openEnvelope(){
   // Start music
   // Change this YouTube video ID to any Regional Mexicano 2000s song
   // Example: search "Jenni Rivera La Chacalosa" on YouTube → copy the video ID from the URL
-  const VIDEO_ID = 'g87MMdc-Kf8';
-  const PLAYLIST_ID = 'PLF25k9XageXkKyKJFeFU1Hb00Se0quBiP';
+  const VIDEO_ID = 'MpKwKkRPvxM';
   document.getElementById('music-frame').src =
     'https://www.youtube.com/embed/'+VIDEO_ID+
-    '?autoplay=1&list='+PLAYLIST_ID+'&listType=playlist&controls=1&modestbranding=1&rel=0&color=white';
+    '?autoplay=1&controls=1&modestbranding=1&rel=0&color=white';
   document.getElementById('music-widget').style.display = 'block';
 
   setTimeout(()=>{
