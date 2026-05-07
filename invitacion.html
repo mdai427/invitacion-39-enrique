@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🤠 39 Cumpleaños de Enrique · 23 de Mayo · Manzanillo</title>
+<link rel="preload" href="images/chatgpt1.png" as="image">
+<link rel="preload" href="images/valentin.png" as="image">
+<link rel="preload" href="images/jenni.png" as="image">
+<link rel="preload" href="images/juangabriel.png" as="image">
+<link rel="preload" href="images/intocable.png" as="image">
+<link rel="preload" href="images/tigres.png" as="image">
+<link rel="preload" href="images/lupillo.png" as="image">
+<link rel="preload" href="images/rocio.png" as="image">
+<link rel="preload" href="images/limite.png" as="image">
+<link rel="preload" href="images/machos.png" as="image">
+<link rel="preload" href="images/bukis.png" as="image">
+<link rel="preload" href="images/arrolladora.png" as="image">
+<link rel="preload" href="images/chapo.png" as="image">
+<link rel="preload" href="images/alejandro.png" as="image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Dancing+Script:wght@700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --gold:#D4AF37;--gold-l:#FFE87C;--gold-d:#8B6914;
+  --dark:#090502;--dark2:#130802;--red-dark:#1a0505;
+}
+html,body{height:100%;overflow-x:hidden;background:#090502;}
+
+/* ═══════════════════════════════════════
+   ENVELOPE SCREEN
+═══════════════════════════════════════ */
+#env-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:radial-gradient(ellipse at 30% 40%,#3a1505 0%,#160802 50%,#050200 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .8s ease, visibility .8s ease;
+}
+#env-screen.hiding{opacity:0;visibility:hidden;}
+
+/* Stars background on envelope screen */
+.env-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.env-star{position:absolute;background:#fff;border-radius:50%;animation:twinkle ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(1)}50%{opacity:.9;transform:scale(1.4)}}
+
+/* Envelope wrapper */
+.env-wrap{
+  position:relative;
+  width:min(360px,88vw);
+  cursor:pointer;
+  filter:drop-shadow(0 30px 60px rgba(0,0,0,.8));
+  transition:transform .3s ease;
+}
+.env-wrap:hover{transform:scale(1.03) translateY(-4px);}
+.env-wrap:active{transform:scale(.98);}
+
+/* SVG envelope */
+.env-svg{width:100%;height:auto;display:block;}
+
+/* Flap animation */
+#env-flap{
+  transform-origin:50% 0%;
+  transform-box:fill-box;
+  transition:transform .9s cubic-bezier(.645,.045,.355,1);
+}
+.opening #env-flap{transform:perspective(600px) rotateX(-180deg);}
+
+/* Invitation card peeking out */
+.env-card-peek{
+  position:absolute;
+  bottom:8%;left:8%;right:8%;
+  height:70%;
+  background:linear-gradient(160deg,#1a0d04 0%,#0d0602 100%);
+  border:2px solid rgba(212,175,55,.4);
+  border-radius:3px;
+  z-index:-1;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:4px;
+  transition:transform 1.3s cubic-bezier(.25,.46,.45,.94),opacity .5s ease;
+  overflow:hidden;
+}
+.opening .env-card-peek{transform:translateY(-130%);opacity:0;}
+
+.peek-text{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.7rem,2.5vw,.9rem);
+  color:var(--gold);
+  letter-spacing:3px;
+  text-align:center;
+  text-shadow:0 0 15px rgba(212,175,55,.5);
+}
+.peek-line{width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:4px 0;}
+
+/* Tap hint */
+.tap-hint{
+  margin-top:28px;
+  font-family:'Oswald',sans-serif;
+  font-size:clamp(.8rem,3vw,1rem);
+  letter-spacing:3px;
+  color:rgba(212,175,55,.7);
+  text-transform:uppercase;
+  animation:hint-pulse 2s ease-in-out infinite;
+}
+@keyframes hint-pulse{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+
+/* Floating music player */
+#music-widget{
+  display:none;position:fixed;bottom:16px;right:16px;z-index:8000;
+  background:#110800;border:2px solid var(--gold);border-radius:14px;
+  overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.7);width:260px;
+  animation:fadeIn .5s ease;
+}
+#music-widget-bar{
+  background:linear-gradient(90deg,#1a0a02,#2a1205);
+  padding:9px 12px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(212,175,55,.3);cursor:pointer;
+}
+#music-widget-bar span{
+  color:var(--gold-l);font-size:.78rem;font-family:'Oswald',sans-serif;
+  letter-spacing:1px;font-weight:600;
+}
+#music-toggle-btn{
+  background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.4);
+  color:var(--gold);border-radius:6px;padding:3px 9px;font-size:.72rem;
+  cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;
+  transition:background .2s;
+}
+#music-toggle-btn:hover{background:rgba(212,175,55,.3);}
+#music-frame-wrap iframe{display:block;width:260px;height:146px;border:none;}
+
+/* ═══════════════════════════════════════
+   MAIN INVITATION
+═══════════════════════════════════════ */
+#invitation{
+  visibility:hidden;
+  position:absolute;
+  top:0;left:0;width:100%;
+  background:#090502;
+  min-height:100vh;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .8s ease;
+}
+#invitation.visible{
+  visibility:visible;
+  position:relative;
+  opacity:1;
+  pointer-events:all;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  width:100%;
+  min-height:100svh;
+  overflow:hidden;
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('images/chatgpt1.png');
+  background-size:cover;
+  background-position:center top;
+  filter:brightness(.6);
+  transform:scale(1);
+  transition:transform 8s ease;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(9,5,2,0.95) 0%,rgba(9,5,2,0.6) 50%,transparent 100%);
+}
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:24px 20px 50px;
+  width:100%;
+}
+.hero-te-invita{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.4rem,5vw,2rem);
+  color:var(--gold-l);
+  text-shadow:0 2px 15px rgba(0,0,0,.8);
+  letter-spacing:2px;
+  animation:fadeUp .8s ease both;
+}
+.hero-name{
+  font-family:'Cinzel',serif;
+  font-size:clamp(4.2rem,18vw,7.5rem);
+  font-weight:900;
+  line-height:.9;
+  background:linear-gradient(180deg,#FFE87C 0%,#D4AF37 45%,#8B6914 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 4px 20px rgba(212,175,55,.7));
+  animation:fadeUp .8s .15s ease both;
+  margin:8px 0 4px;
+}
+.hero-cumple{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.7rem,6vw,2.6rem);
+  color:var(--gold-l);
+  text-shadow:0 2px 12px rgba(0,0,0,.8);
+  animation:fadeUp .8s .3s ease both;
+}
+.hero-divider{
+  display:flex;align-items:center;gap:8px;justify-content:center;
+  margin:12px 0;animation:fadeUp .8s .45s ease both;
+}
+.hero-divider span{display:block;height:1px;width:50px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.hero-badge{
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+  width:110px;height:110px;border-radius:50%;
+  border:3px solid var(--gold);
+  background:radial-gradient(circle,rgba(212,175,55,.2) 0%,rgba(9,5,2,.9) 100%);
+  margin:12px auto;
+  animation:fadeUp .8s .6s ease both, badge-glow 3s ease-in-out infinite;
+  position:relative;
+}
+.hero-badge::after{content:'';position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(212,175,55,.25);}
+@keyframes badge-glow{0%,100%{box-shadow:0 0 20px rgba(212,175,55,.3)}50%{box-shadow:0 0 40px rgba(212,175,55,.6),0 0 80px rgba(212,175,55,.2)}}
+.badge-num{font-family:'Cinzel',serif;font-size:3.2rem;font-weight:900;background:linear-gradient(180deg,#FFE87C,#D4AF37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.badge-lbl{font-size:.55rem;letter-spacing:3px;color:var(--gold-l);text-transform:uppercase;}
+
+.hero-info-strip{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  background:rgba(0,0,0,.6);
+  border:1px solid rgba(212,175,55,.3);
+  border-radius:30px;
+  padding:10px 20px;
+  margin:12px auto 0;
+  max-width:340px;
+  animation:fadeUp .8s .75s ease both;
+  backdrop-filter:blur(6px);
+}
+.info-item{text-align:center;}
+.info-label{font-size:.7rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:block;}
+.info-val{font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:1px;}
+.info-sep{color:rgba(212,175,55,.4);font-size:1.2rem;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+/* Scroll indicator */
+.scroll-down{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  color:rgba(255,255,255,.5);font-size:.55rem;letter-spacing:2px;text-transform:uppercase;
+  animation:scroll-bounce 2s ease-in-out infinite;z-index:2;
+}
+.scroll-arrow{width:20px;height:20px;border-right:2px solid rgba(255,255,255,.4);border-bottom:2px solid rgba(255,255,255,.4);transform:rotate(45deg);}
+@keyframes scroll-bounce{0%,100%{opacity:.4;transform:translateX(-50%) translateY(0)}50%{opacity:.9;transform:translateX(-50%) translateY(6px)}}
+
+/* ── COUNTDOWN ── */
+.section{padding:36px 16px;}
+.section-gold{background:var(--dark2);}
+.section-dark{background:#0d0703;}
+.sec-title{
+  font-family:'Cinzel',serif;font-size:1.05rem;letter-spacing:4px;
+  color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:6px;
+}
+.sec-sub{
+  font-family:'Dancing Script',cursive;font-size:1.9rem;
+  color:var(--gold-l);text-align:center;margin-bottom:20px;
+}
+.ornament{display:flex;align-items:center;gap:8px;justify-content:center;margin:10px 0 20px;}
+.ornament s{text-decoration:none;display:block;height:1px;width:40px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+
+.countdown-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.cd-box{
+  background:rgba(212,175,55,.06);border:1px solid rgba(212,175,55,.35);
+  border-radius:14px;padding:16px 14px;min-width:72px;text-align:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.cd-num{font-family:'Cinzel',serif;font-size:2.8rem;font-weight:900;color:var(--gold-l);display:block;line-height:1;}
+.cd-lbl{font-size:.72rem;letter-spacing:2px;color:var(--gold-d);text-transform:uppercase;margin-top:6px;display:block;}
+
+/* ── NEON DIVIDER ── */
+.neon-div{height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.4;}
+
+/* ── POSTERS SECTION ── */
+.posters-section{padding:36px 0 36px;}
+.posters-scroll{
+  display:flex;gap:12px;overflow-x:auto;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+  padding:8px 16px 16px;scrollbar-width:none;
+}
+.posters-scroll::-webkit-scrollbar{display:none;}
+
+.poster-card{
+  flex-shrink:0;width:min(160px,44vw);
+  aspect-ratio:2/3;border-radius:12px;
+  scroll-snap-align:start;overflow:hidden;
+  border:2px solid rgba(212,175,55,.3);
+  cursor:pointer;
+  transition:transform .3s ease,border-color .3s,box-shadow .3s;
+  position:relative;
+}
+.poster-card:hover,.poster-card:active{
+  transform:scale(1.06) translateY(-4px);
+  border-color:var(--gold);
+  box-shadow:0 12px 40px rgba(212,175,55,.3);
+}
+.poster-card img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;transition:transform .4s ease;
+}
+.poster-card:hover img{transform:scale(1.05);}
+.poster-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:20px 8px 8px;
+  background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 100%);
+  text-align:center;
+}
+.poster-name{
+  font-family:'Cinzel',serif;font-size:.78rem;font-weight:900;
+  color:#fff;letter-spacing:1px;line-height:1.2;
+}
+.scroll-hint{
+  text-align:center;font-size:.6rem;letter-spacing:2px;
+  color:rgba(212,175,55,.4);margin-top:4px;text-transform:uppercase;
+}
+
+/* ── DRESS CODE ── */
+.dresscode-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;max-width:380px;margin:20px auto 0;
+}
+.dc-item{
+  background:rgba(212,175,55,.05);border:1px solid rgba(212,175,55,.2);
+  border-radius:14px;padding:20px 10px;text-align:center;
+}
+.dc-emoji{font-size:2.6rem;display:block;margin-bottom:8px;}
+.dc-text{font-size:.88rem;color:var(--gold-l);letter-spacing:1px;text-transform:uppercase;}
+.dc-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--gold-d),var(--gold),#FFE87C,var(--gold));
+  background-size:200% auto;
+  color:#000;font-weight:900;font-size:.65rem;letter-spacing:2px;
+  padding:8px 24px;border-radius:30px;text-transform:uppercase;
+  margin-top:20px;font-family:'Cinzel',serif;
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
+
+/* ── SONGS ── */
+.songs-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;max-width:420px;margin:16px auto 0;
+}
+.song-opt{
+  background:rgba(212,175,55,.04);border:1.5px solid rgba(212,175,55,.2);
+  border-radius:10px;padding:12px 10px;cursor:pointer;
+  transition:all .25s ease;text-align:left;position:relative;overflow:hidden;
+}
+.song-opt.sel{border-color:var(--gold);background:rgba(212,175,55,.15);box-shadow:0 0 20px rgba(212,175,55,.2);}
+.song-opt.sel::after{content:'♪';position:absolute;top:6px;right:8px;color:var(--gold);font-size:.85rem;}
+.song-title{font-size:.88rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:4px;}
+.song-artist{font-size:.72rem;color:var(--gold);letter-spacing:1px;text-transform:uppercase;}
+.custom-inp{
+  width:100%;background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(212,175,55,.3);border-radius:10px;
+  padding:13px 16px;color:#fff;font-family:'Oswald',sans-serif;font-size:.9rem;
+  outline:none;transition:border-color .3s;margin-top:14px;max-width:420px;display:block;
+}
+.custom-inp::placeholder{color:rgba(255,255,255,.3);}
+.custom-inp:focus{border-color:var(--gold);}
+
+/* ── RSVP ── */
+.rsvp-form{max-width:400px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
+.f-label{display:block;font-size:.8rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.f-input,.f-select{
+  width:100%;background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(212,175,55,.3);border-radius:10px;
+  padding:16px 18px;color:#fff;font-family:'Oswald',sans-serif;font-size:1.1rem;
+  outline:none;transition:all .3s;appearance:none;
+}
+.f-input:focus,.f-select:focus{border-color:var(--gold);background:rgba(212,175,55,.08);}
+.f-input::placeholder{color:rgba(255,255,255,.3);}
+.f-select option{background:#1a0a02;color:#fff;}
+.guests-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.guest-btn{
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(212,175,55,.25);
+  border-radius:10px;color:#fff;padding:13px 4px;font-size:1rem;
+  font-family:'Cinzel',serif;cursor:pointer;transition:all .2s;
+}
+.guest-btn.active{
+  background:linear-gradient(135deg,var(--gold-d),var(--gold));
+  border-color:var(--gold);color:#000;font-weight:900;
+  box-shadow:0 0 15px rgba(212,175,55,.4);
+}
+.confirm-btn{
+  background:linear-gradient(135deg,#8B6914,#D4AF37,#FFE87C,#D4AF37,#8B6914);
+  background-size:200% auto;border:none;border-radius:12px;
+  color:#000;font-family:'Cinzel',serif;font-size:1.05rem;font-weight:900;
+  letter-spacing:3px;padding:18px 30px;width:100%;cursor:pointer;
+  text-transform:uppercase;animation:shimmer 3s linear infinite;
+  transition:transform .3s,box-shadow .3s;margin-top:4px;
+}
+.confirm-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,.5);}
+.confirm-btn:active{transform:translateY(0);}
+
+/* ── SUCCESS OVERLAY ── */
+.success-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);
+  z-index:9998;align-items:center;justify-content:center;
+  flex-direction:column;text-align:center;padding:30px;animation:fadeIn .4s ease;
+}
+.success-overlay.show{display:flex;}
+.suc-icon{font-size:4.5rem;margin-bottom:16px;animation:bounce .7s ease;}
+.suc-title{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold);margin-bottom:10px;}
+.suc-text{font-size:.95rem;color:rgba(255,255,255,.8);line-height:1.7;max-width:300px;}
+.suc-close{
+  margin-top:28px;background:transparent;border:2px solid var(--gold);
+  color:var(--gold);font-family:'Cinzel',serif;font-size:.85rem;
+  padding:12px 28px;border-radius:30px;cursor:pointer;letter-spacing:2px;
+}
+
+/* ── FOOTER ── */
+.footer{
+  background:var(--dark2);border-top:1px solid rgba(212,175,55,.2);
+  padding:28px 16px 40px;text-align:center;
+}
+.footer-q{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--gold-l);margin-bottom:8px;}
+.footer-s{font-size:.6rem;letter-spacing:2px;color:rgba(255,255,255,.35);text-transform:uppercase;}
+
+/* Particles */
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.particle{position:absolute;background:var(--gold);border-radius:50%;opacity:0;animation:float-up linear infinite;}
+@keyframes float-up{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:.5}100%{transform:translateY(-10vh) scale(1.5);opacity:0}}
+
+/* Reveal animation */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     ENVELOPE SCREEN
+══════════════════════════════════════ -->
+<div id="env-screen">
+  <div class="env-stars" id="env-stars"></div>
+  <div class="particles" id="env-particles"></div>
+
+  <div class="env-wrap" id="env-wrap" onclick="openEnvelope()">
+    <!-- SVG Envelope -->
+    <svg class="env-svg" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#C9942A"/>
+          <stop offset="100%" stop-color="#7A5010"/>
+        </linearGradient>
+        <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E0AA40"/>
+          <stop offset="100%" stop-color="#A07820"/>
+        </linearGradient>
+        <linearGradient id="leftGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#7A5010"/>
+          <stop offset="100%" stop-color="#B08025"/>
+        </linearGradient>
+        <linearGradient id="rightGrad" x1="1" y1="0" x2="0" y2="0">
+          <stop offset="0%" stop-color="#7A5010"/>
+          <stop offset="100%" stop-color="#B08025"/>
+        </linearGradient>
+        <linearGradient id="btmGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6B4E0A"/>
+          <stop offset="100%" stop-color="#4A3408"/>
+        </linearGradient>
+        <filter id="shadow">
+          <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".5"/>
+        </filter>
+      </defs>
+
+      <!-- Body -->
+      <rect x="0" y="0" width="400" height="260" rx="6" fill="url(#bodyGrad)" filter="url(#shadow)"/>
+
+      <!-- Gold border -->
+      <rect x="2" y="2" width="396" height="256" rx="5" fill="none" stroke="#D4AF37" stroke-width="2.5"/>
+      <rect x="7" y="7" width="386" height="246" rx="4" fill="none" stroke="#D4AF37" stroke-width=".8" opacity=".4"/>
+
+      <!-- Left fold -->
+      <polygon points="0,0 200,150 0,260" fill="url(#leftGrad)" opacity=".9"/>
+      <!-- Right fold -->
+      <polygon points="400,0 200,150 400,260" fill="url(#rightGrad)" opacity=".9"/>
+      <!-- Bottom V -->
+      <polygon points="0,260 200,150 400,260" fill="url(#btmGrad)"/>
+
+      <!-- Fold lines -->
+      <line x1="0" y1="0" x2="200" y2="150" stroke="#D4AF37" stroke-width="1" opacity=".25"/>
+      <line x1="400" y1="0" x2="200" y2="150" stroke="#D4AF37" stroke-width="1" opacity=".25"/>
+      <line x1="0" y1="260" x2="200" y2="150" stroke="#D4AF37" stroke-width="1" opacity=".2"/>
+      <line x1="400" y1="260" x2="200" y2="150" stroke="#D4AF37" stroke-width="1" opacity=".2"/>
+
+      <!-- Corner ornaments -->
+      <circle cx="12" cy="12" r="4" fill="#D4AF37" opacity=".6"/>
+      <circle cx="388" cy="12" r="4" fill="#D4AF37" opacity=".6"/>
+      <circle cx="12" cy="248" r="4" fill="#D4AF37" opacity=".6"/>
+      <circle cx="388" cy="248" r="4" fill="#D4AF37" opacity=".6"/>
+
+      <!-- Top flap -->
+      <g id="env-flap">
+        <polygon points="0,0 400,0 200,145" fill="url(#flapGrad)"/>
+        <polygon points="2,2 398,2 200,143" fill="none" stroke="#D4AF37" stroke-width="1" opacity=".3"/>
+        <!-- Flap top border -->
+        <line x1="0" y1="0" x2="400" y2="0" stroke="#D4AF37" stroke-width="2.5"/>
+        <!-- Flap decorative lines -->
+        <line x1="20" y1="2" x2="200" y2="138" stroke="#D4AF37" stroke-width=".6" opacity=".2"/>
+        <line x1="380" y1="2" x2="200" y2="138" stroke="#D4AF37" stroke-width=".6" opacity=".2"/>
+      </g>
+    </svg>
+
+    <!-- Wax seal -->
+    <div style="position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);
+      width:70px;height:70px;border-radius:50%;
+      background:radial-gradient(circle at 40% 35%,#A00 0%,#500 100%);
+      border:3px solid #D4AF37;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.9rem;z-index:10;
+      box-shadow:0 4px 20px rgba(0,0,0,.6),0 0 0 6px rgba(212,175,55,.1);
+      transition:transform .3s,opacity .3s;" id="wax-seal">
+      🐓
+    </div>
+
+    <!-- Card peek inside -->
+    <div class="env-card-peek">
+      <div class="peek-text">🤠 Mi Cumpleaños 🤠</div>
+      <div class="peek-line"></div>
+      <div class="peek-text">23 de Mayo · Manzanillo</div>
+    </div>
+  </div>
+
+  <p class="tap-hint">✉️ &nbsp;Toca para Abrir tu Invitación</p>
+</div>
+
+<!-- FLOATING MUSIC PLAYER -->
+<div id="music-widget">
+  <div id="music-widget-bar" onclick="toggleMusic()">
+    <span>🎵 &nbsp;ÉXITOS REGIONALES 2000's</span>
+    <button id="music-toggle-btn">MIN ▼</button>
+  </div>
+  <div id="music-frame-wrap">
+    <iframe id="music-frame" src="" width="260" height="146" frameborder="0"
+      allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     INVITATION CONTENT
+══════════════════════════════════════ -->
+<div id="invitation">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="particles" id="hero-particles"></div>
+    <div class="hero-content">
+      <div class="hero-te-invita">🤠 Te Invita a Celebrar 🤠</div>
+      <div class="hero-name">ENRIQUE</div>
+      <div class="hero-cumple">Mi Cumpleaños</div>
+      <div class="hero-divider">
+        <span></span><span style="color:var(--gold);font-size:1.1rem;">✦</span>
+        <span style="color:var(--gold);font-size:1.1rem;">⭐</span>
+        <span style="color:var(--gold);font-size:1.1rem;">✦</span><span></span>
+      </div>
+      <div class="hero-badge">
+        <span class="badge-num">39</span>
+        <span class="badge-lbl">Años</span>
+      </div>
+      <div class="hero-info-strip">
+        <div class="info-item">
+          <span class="info-label">Fecha</span>
+          <span class="info-val">Sáb 23 Mayo</span>
+        </div>
+        <span class="info-sep">|</span>
+        <div class="info-item">
+          <span class="info-label">Lugar</span>
+          <span class="info-val">Manzanillo</span>
+        </div>
+        <span class="info-sep">|</span>
+        <div class="info-item">
+          <span class="info-label">Colima</span>
+          <span class="info-val">🌊</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-down">
+      <div class="scroll-arrow"></div>
+      <span>Ver Invitación</span>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <div class="neon-div"></div>
+  <section class="section section-gold reveal">
+    <div class="sec-title">⏳ Cuenta Regresiva</div>
+    <div class="sec-sub">Para la Fiesta del Año</div>
+    <div class="countdown-row">
+      <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Días</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Horas</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Min</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">Seg</span></div>
+    </div>
+  </section>
+
+  <!-- ARTIST POSTERS -->
+  <div class="neon-div"></div>
+  <section class="section section-dark reveal" style="padding-left:0;padding-right:0;">
+    <div style="padding:0 16px;">
+      <div class="sec-title">🎶 Los Artistas de la Noche</div>
+      <div class="sec-sub">Éxitos Regionales 2000's</div>
+    </div>
+    <div class="posters-scroll">
+      <div class="poster-card">
+        <img src="images/valentin.png" alt="Valentín Elizalde" loading="eager">
+        <div class="poster-label"><div class="poster-name">VALENTÍN ELIZALDE</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/jenni.png" alt="Jenni Rivera" loading="eager">
+        <div class="poster-label"><div class="poster-name">JENNI RIVERA</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/juangabriel.png" alt="Juan Gabriel" loading="eager">
+        <div class="poster-label"><div class="poster-name">JUAN GABRIEL</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/intocable.png" alt="Intocable" loading="eager">
+        <div class="poster-label"><div class="poster-name">INTOCABLE</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/tigres.png" alt="Los Tigres del Norte" loading="eager">
+        <div class="poster-label"><div class="poster-name">LOS TIGRES DEL NORTE</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/lupillo.png" alt="Lupillo Rivera" loading="eager">
+        <div class="poster-label"><div class="poster-name">LUPILLO RIVERA</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/rocio.png" alt="Rocío Dúrcal" loading="eager">
+        <div class="poster-label"><div class="poster-name">ROCÍO DÚRCAL</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/limite.png" alt="Grupo Límite" loading="eager">
+        <div class="poster-label"><div class="poster-name">GRUPO LÍMITE</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/machos.png" alt="Banda Machos" loading="eager">
+        <div class="poster-label"><div class="poster-name">BANDA MACHOS</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/bukis.png" alt="Los Bukis" loading="eager">
+        <div class="poster-label"><div class="poster-name">LOS BUKIS</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/arrolladora.png" alt="La Arrolladora" loading="eager">
+        <div class="poster-label"><div class="poster-name">LA ARROLLADORA</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/chapo.png" alt="El Chapo de Sinaloa" loading="eager">
+        <div class="poster-label"><div class="poster-name">EL CHAPO DE SINALOA</div></div>
+      </div>
+      <div class="poster-card">
+        <img src="images/alejandro.png" alt="Alejandro Fernández" loading="eager">
+        <div class="poster-label"><div class="poster-name">ALEJANDRO FERNÁNDEZ</div></div>
+      </div>
+    </div>
+    <p class="scroll-hint">← Desliza para ver más →</p>
+  </section>
+
+  <!-- DRESS CODE -->
+  <div class="neon-div"></div>
+  <section class="section section-gold reveal" style="text-align:center;">
+    <div class="sec-title">👗 Código de Vestimenta</div>
+    <div class="sec-sub">Dress Code</div>
+    <div class="dresscode-grid">
+      <div class="dc-item"><span class="dc-emoji">🤠</span><div class="dc-text">Sombrero Vaquero</div></div>
+      <div class="dc-item"><span class="dc-emoji">👢</span><div class="dc-text">Botas Vaqueras</div></div>
+      <div class="dc-item"><span class="dc-emoji">👖</span><div class="dc-text">Jeans o Pantalón</div></div>
+      <div class="dc-item"><span class="dc-emoji">✨</span><div class="dc-text">Look Western</div></div>
+    </div>
+    <div class="dc-badge">🤠 Vaquero / Vaquera 🤠</div>
+    <p style="margin-top:14px;font-size:.75rem;color:rgba(255,255,255,.45);font-style:italic;">¡El look más vaquero se lleva un premio! 🏆</p>
+  </section>
+
+  <!-- SONGS -->
+  <div class="neon-div"></div>
+  <section class="section section-dark reveal" style="text-align:center;">
+    <div class="sec-title">🎵 Tu Canción Favorita</div>
+    <div class="sec-sub">de los 2000's</div>
+    <p style="font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:4px;">Elige hasta 2 canciones que quieres escuchar esa noche</p>
+    <div class="songs-grid">
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">Soy el Número Uno</div><div class="song-artist">Valentín Elizalde</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">A Mis Enemigos</div><div class="song-artist">Valentín Elizalde</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">Lástima de Luna</div><div class="song-artist">Intocable</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">Prometiste</div><div class="song-artist">Intocable</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">La Chacalosa</div><div class="song-artist">Jenni Rivera</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">De Contrabando</div><div class="song-artist">Jenni Rivera</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">Amor Eterno</div><div class="song-artist">Juan Gabriel</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">Por Tu Maldito Amor</div><div class="song-artist">Juan Gabriel</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">La Puerta Negra</div><div class="song-artist">Los Tigres</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">Paloma Negra</div><div class="song-artist">Jenni Rivera</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">Fuiste Mía</div><div class="song-artist">Valentín Elizalde</div></div>
+      <div class="song-opt" onclick="toggleSong(this)"><div class="song-title">Te Aprovechas</div><div class="song-artist">Alicia Villarreal</div></div>
+    </div>
+    <p style="font-size:.72rem;color:var(--gold-d);margin-top:14px;font-style:italic;">¿Tu favorita no está? Escríbela aquí 👇</p>
+    <input type="text" class="custom-inp" id="customSong" placeholder="🎵 Escribe tu canción..." style="margin:0 auto;max-width:420px;">
+  </section>
+
+  <!-- RSVP -->
+  <div class="neon-div"></div>
+  <section class="section section-gold reveal" style="text-align:center;">
+    <div class="sec-title">🥂 Confirma tu Asistencia</div>
+    <div class="sec-sub">¿Nos acompañas?</div>
+    <form class="rsvp-form" onsubmit="confirmRSVP(event)">
+      <div>
+        <label class="f-label">Tu Nombre Completo</label>
+        <input type="text" class="f-input" id="rsvp-name" placeholder="¿Cómo te llamas?" required>
+      </div>
+      <div>
+        <label class="f-label">¿Cuántas personas vienen? (incluyéndote)</label>
+        <div class="guests-row">
+          <button type="button" class="guest-btn" onclick="pickGuests(this,1)">1</button>
+          <button type="button" class="guest-btn" onclick="pickGuests(this,2)">2</button>
+          <button type="button" class="guest-btn" onclick="pickGuests(this,3)">3</button>
+          <button type="button" class="guest-btn" onclick="pickGuests(this,4)">4</button>
+          <button type="button" class="guest-btn" onclick="pickGuests(this,5)">5+</button>
+        </div>
+        <input type="hidden" id="rsvp-guests">
+      </div>
+      <div>
+        <label class="f-label">Confirmación</label>
+        <select class="f-select" id="rsvp-confirm" required>
+          <option value="">— Selecciona —</option>
+          <option value="si">✅ ¡Sí, ahí estaré!</option>
+          <option value="quiza">🤔 Quizás, lo confirmo pronto</option>
+          <option value="no">❌ No podré asistir</option>
+        </select>
+      </div>
+      <button type="submit" class="confirm-btn">🥂 CONFIRMAR ASISTENCIA 🥂</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="neon-div"></div>
+  <footer class="footer">
+    <div class="footer-q">"La música es el idioma del alma"</div>
+    <div style="font-size:2rem;margin:10px 0;">🤠 🎶 🌵 🥂</div>
+    <div class="footer-s">Sábado 23 de Mayo · Manzanillo, Colima</div>
+    <div style="height:6px;"></div>
+    <div class="footer-s">Con todo mi cariño · Enrique</div>
+  </footer>
+
+</div><!-- end #invitation -->
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="suc-overlay">
+  <div class="suc-icon">🎉</div>
+  <div class="suc-title">¡Gracias!</div>
+  <div class="suc-text" id="suc-text"></div>
+  <button class="suc-close" onclick="document.getElementById('suc-overlay').classList.remove('show')">CERRAR</button>
+</div>
+
+<script>
+// ═══════ ENV STARS ═══════
+(function(){
+  const c=document.getElementById('env-stars');
+  for(let i=0;i<70;i++){
+    const s=document.createElement('div');s.className='env-star';
+    const sz=Math.random()*2+.8;
+    Object.assign(s.style,{
+      left:Math.random()*100+'%',top:Math.random()*100+'%',
+      width:sz+'px',height:sz+'px',
+      animationDuration:(Math.random()*3+2)+'s',
+      animationDelay:(Math.random()*4)+'s'
+    });
+    c.appendChild(s);
+  }
+})();
+
+// ═══════ PARTICLES ═══════
+function addParticles(containerId){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  for(let i=0;i<25;i++){
+    const p=document.createElement('div');p.className='particle';
+    const sz=Math.random()*3+1.5;
+    Object.assign(p.style,{
+      left:Math.random()*100+'%',
+      width:sz+'px',height:sz+'px',
+      animationDuration:(Math.random()*9+5)+'s',
+      animationDelay:(Math.random()*9)+'s'
+    });
+    c.appendChild(p);
+  }
+}
+addParticles('env-particles');
+addParticles('hero-particles');
+
+// ═══════ OPEN ENVELOPE ═══════
+function openEnvelope(){
+  const wrap=document.getElementById('env-wrap');
+  const seal=document.getElementById('wax-seal');
+  wrap.classList.add('opening');
+  seal.style.opacity='0';seal.style.transform='translate(-50%,-50%) scale(.5)';
+
+  // Start music
+  // Change this YouTube video ID to any Regional Mexicano 2000s song
+  // Example: search "Jenni Rivera La Chacalosa" on YouTube → copy the video ID from the URL
+  const VIDEO_ID = 'g87MMdc-Kf8';
+  const PLAYLIST_ID = 'PLF25k9XageXkKyKJFeFU1Hb00Se0quBiP';
+  document.getElementById('music-frame').src =
+    'https://www.youtube.com/embed/'+VIDEO_ID+
+    '?autoplay=1&list='+PLAYLIST_ID+'&listType=playlist&controls=1&modestbranding=1&rel=0&color=white';
+  document.getElementById('music-widget').style.display = 'block';
+
+  setTimeout(()=>{
+    const env=document.getElementById('env-screen');
+    env.classList.add('hiding');
+    const inv=document.getElementById('invitation');
+    setTimeout(()=>{inv.classList.add('visible');},50);
+    setTimeout(()=>{env.style.display='none';},800);
+    startReveal();
+  },1400);
+}
+
+// ═══════ SCROLL REVEAL ═══════
+function startReveal(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+// ═══════ COUNTDOWN ═══════
+function tick(){
+  const target=new Date('2026-05-23T20:00:00');
+  const now=new Date();
+  const diff=target-now;
+  if(diff<=0){
+    ['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='🎉');
+    return;
+  }
+  document.getElementById('cd-d').textContent=String(Math.floor(diff/(864e5))).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(Math.floor(diff%(864e5)/36e5)).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(Math.floor(diff%36e5/6e4)).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(Math.floor(diff%6e4/1e3)).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+// ═══════ MUSIC TOGGLE ═══════
+let musicMin = false;
+function toggleMusic(){
+  musicMin = !musicMin;
+  document.getElementById('music-frame-wrap').style.display = musicMin ? 'none' : 'block';
+  document.getElementById('music-toggle-btn').textContent = musicMin ? 'VER ▲' : 'MIN ▼';
+}
+
+// ═══════ SONGS ═══════
+let selSongs=[];
+function toggleSong(el){
+  const t=el.querySelector('.song-title').textContent;
+  if(el.classList.contains('sel')){
+    el.classList.remove('sel');selSongs=selSongs.filter(s=>s!==t);
+  } else {
+    if(selSongs.length>=2){
+      document.querySelector('.song-opt.sel').classList.remove('sel');
+      selSongs.shift();
+    }
+    el.classList.add('sel');selSongs.push(t);
+  }
+}
+
+// ═══════ GUESTS ═══════
+let selGuests=null;
+function pickGuests(btn,n){
+  document.querySelectorAll('.guest-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');selGuests=n;
+  document.getElementById('rsvp-guests').value=n;
+}
+
+// ═══════ RSVP ═══════
+function confirmRSVP(e){
+  e.preventDefault();
+  const name=document.getElementById('rsvp-name').value.trim();
+  const guests=document.getElementById('rsvp-guests').value;
+  const conf=document.getElementById('rsvp-confirm').value;
+  if(!name){alert('Por favor escribe tu nombre 😊');return;}
+  if(!guests){alert('¿Cuántas personas vienen? 🤠');return;}
+  if(!conf){alert('Por favor selecciona tu confirmación');return;}
+
+  const custom=document.getElementById('customSong').value.trim();
+  const all=[...selSongs];if(custom)all.push(custom);
+
+  let msg='';
+  if(conf==='si'){
+    msg=`¡Ahí te esperamos, <strong>${name}</strong>!<br>Llegas con ${guests} persona${guests>1?'s':''}. 🤠<br><br>`;
+    if(all.length)msg+=`🎵 Tu(s) canción(es): <strong>${all.join(' & ')}</strong><br><br>`;
+    msg+='¡Nos vemos el Sábado 23 de Mayo en Manzanillo! 🥂';
+  } else if(conf==='quiza'){
+    msg=`¡<strong>${name}</strong>, ojalá puedas venir!<br>No te lo puedes perder 🎶`;
+  } else {
+    msg=`¡<strong>${name}</strong>, qué lástima!<br>¡Gracias por avisar, te extrañaremos! 🥹`;
+  }
+  document.getElementById('suc-text').innerHTML=msg;
+  document.getElementById('suc-overlay').classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "invitacion-39-enrique",
+  "version": "1.0.0",
+  "description": "Invitación interactiva cumpleaños 39 Enrique - Éxitos Regionales 2000s",
+  "scripts": {
+    "start": "npx serve . --listen $PORT --no-clipboard",
+    "dev": "npx serve . --listen 3999"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
