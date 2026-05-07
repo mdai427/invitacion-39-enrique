@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🤠 39 Cumpleaños de Enrique · 23 de Mayo · Manzanillo</title>
 <link rel="preload" href="images/chatgpt1.png" as="image">
+<link rel="preload" href="images/enrique-hero.png" as="image">
 <link rel="preload" href="images/valentin.png" as="image">
 <link rel="preload" href="images/jenni.png" as="image">
 <link rel="preload" href="images/juangabriel.png" as="image">
@@ -176,6 +177,32 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
   padding:24px 20px 50px;
   width:100%;
 }
+/* ── PHOTO ── */
+.hero-photo-wrap{
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  margin:0 auto 16px;
+  max-width:480px;
+}
+.hero-photo-frame{
+  flex-shrink:0;
+  width:min(200px,48vw);
+  border-radius:18px;
+  overflow:hidden;
+  border:3px solid var(--gold);
+  box-shadow:0 0 40px rgba(212,175,55,.55),0 0 80px rgba(212,175,55,.2);
+  animation:fadeUp .8s .05s ease both;
+}
+.hero-photo-frame img{
+  width:100%;display:block;object-fit:cover;
+}
+.hero-name-side{
+  flex:1;text-align:left;
+}
+@media(max-width:400px){
+  .hero-photo-wrap{flex-direction:column;gap:10px;}
+  .hero-photo-frame{width:min(220px,70vw);}
+  .hero-name-side{text-align:center;}
+}
 .hero-te-invita{
   font-family:'Dancing Script',cursive;
   font-size:clamp(1.4rem,5vw,2rem);
@@ -186,7 +213,7 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
 }
 .hero-name{
   font-family:'Cinzel',serif;
-  font-size:clamp(4.2rem,18vw,7.5rem);
+  font-size:clamp(2.8rem,10vw,5rem);
   font-weight:900;
   line-height:.9;
   background:linear-gradient(180deg,#FFE87C 0%,#D4AF37 45%,#8B6914 100%);
@@ -560,8 +587,15 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
     <div class="particles" id="hero-particles"></div>
     <div class="hero-content">
       <div class="hero-te-invita">🤠 Te Invita a Celebrar 🤠</div>
-      <div class="hero-name">ENRIQUE</div>
-      <div class="hero-cumple">Mi Cumpleaños</div>
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+          <img src="images/enrique-hero.png" alt="Enrique" loading="eager">
+        </div>
+        <div class="hero-name-side">
+          <div class="hero-name">ENRIQUE</div>
+          <div class="hero-cumple">Mi Cumpleaños</div>
+        </div>
+      </div>
       <div class="hero-divider">
         <span></span><span style="color:var(--gold);font-size:1.1rem;">✦</span>
         <span style="color:var(--gold);font-size:1.1rem;">⭐</span>
