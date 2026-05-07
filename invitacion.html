@@ -906,6 +906,8 @@ function pickGuests(btn,n){
 }
 
 // ═══════ RSVP ═══════
+const SHEETS_URL = 'PEGA_AQUI_TU_URL_DE_APPS_SCRIPT';
+
 function confirmRSVP(e){
   e.preventDefault();
   const name=document.getElementById('rsvp-name').value.trim();
@@ -917,6 +919,23 @@ function confirmRSVP(e){
 
   const custom=document.getElementById('customSong').value.trim();
   const all=[...selSongs];if(custom)all.push(custom);
+
+  // Enviar a Google Sheets
+  const payload = {
+    nombre: name,
+    invitados: guests,
+    confirmacion: conf === 'si' ? 'Sí asiste' : conf === 'quiza' ? 'Quizá' : 'No asiste',
+    canciones: all.join(', ') || '—',
+    fecha: new Date().toLocaleString('es-MX', {timeZone:'America/Mexico_City'})
+  };
+  if(SHEETS_URL !== 'PEGA_AQUI_TU_URL_DE_APPS_SCRIPT'){
+    fetch(SHEETS_URL, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    }).catch(()=>{});
+  }
 
   let msg='';
   if(conf==='si'){
