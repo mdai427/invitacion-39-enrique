@@ -360,11 +360,30 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
 /* ── POSTERS SECTION ── */
 .posters-section{padding:36px 0 36px;}
 .posters-scroll{
-  display:flex;gap:12px;overflow-x:auto;
-  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
-  padding:8px 16px 16px;scrollbar-width:none;
+  overflow:hidden;
+  padding:8px 0 16px;
+  position:relative;
 }
-.posters-scroll::-webkit-scrollbar{display:none;}
+/* fade edges */
+.posters-scroll::before,.posters-scroll::after{
+  content:'';position:absolute;top:0;bottom:16px;width:70px;z-index:2;pointer-events:none;
+}
+.posters-scroll::before{left:0;background:linear-gradient(90deg,#090502 0%,transparent 100%);}
+.posters-scroll::after{right:0;background:linear-gradient(-90deg,#090502 0%,transparent 100%);}
+
+.posters-track{
+  display:flex;gap:12px;
+  width:max-content;
+  padding:0 6px;
+  animation:poster-slide 38s linear infinite;
+  will-change:transform;
+}
+.posters-track:hover,.posters-track:active{animation-play-state:paused;}
+
+@keyframes poster-slide{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
 
 .poster-card{
   flex-shrink:0;width:min(160px,44vw);
@@ -711,61 +730,35 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
       <div class="sec-sub">Éxitos Regionales 2000's</div>
     </div>
     <div class="posters-scroll">
-      <div class="poster-card">
-        <img src="images/valentin.png" alt="Valentín Elizalde" loading="eager">
-        <div class="poster-label"><div class="poster-name">VALENTÍN ELIZALDE</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/jenni.png" alt="Jenni Rivera" loading="eager">
-        <div class="poster-label"><div class="poster-name">JENNI RIVERA</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/alejandro.png" alt="Alejandro Fernández" loading="eager">
-        <div class="poster-label"><div class="poster-name">ALEJANDRO FERNÁNDEZ</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/juangabriel.png" alt="Juan Gabriel" loading="eager">
-        <div class="poster-label"><div class="poster-name">JUAN GABRIEL</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/intocable.png" alt="Intocable" loading="eager">
-        <div class="poster-label"><div class="poster-name">INTOCABLE</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/tigres.png" alt="Los Tigres del Norte" loading="eager">
-        <div class="poster-label"><div class="poster-name">LOS TIGRES DEL NORTE</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/lupillo.png" alt="Lupillo Rivera" loading="eager">
-        <div class="poster-label"><div class="poster-name">LUPILLO RIVERA</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/rocio.png" alt="Rocío Dúrcal" loading="eager">
-        <div class="poster-label"><div class="poster-name">ROCÍO DÚRCAL</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/limite.png" alt="Grupo Límite" loading="eager">
-        <div class="poster-label"><div class="poster-name">GRUPO LÍMITE</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/machos.png" alt="Banda Machos" loading="eager">
-        <div class="poster-label"><div class="poster-name">BANDA MACHOS</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/bukis.png" alt="Los Bukis" loading="eager">
-        <div class="poster-label"><div class="poster-name">LOS BUKIS</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/arrolladora.png" alt="La Arrolladora" loading="eager">
-        <div class="poster-label"><div class="poster-name">LA ARROLLADORA</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/chapo.png" alt="El Chapo de Sinaloa" loading="eager">
-        <div class="poster-label"><div class="poster-name">EL CHAPO DE SINALOA</div></div>
-      </div>
-      <div class="poster-card">
-        <img src="images/alejandro.png" alt="Alejandro Fernández" loading="eager">
-        <div class="poster-label"><div class="poster-name">ALEJANDRO FERNÁNDEZ</div></div>
+      <div class="posters-track">
+        <!-- Set 1 -->
+        <div class="poster-card"><img src="images/valentin.png" alt="Valentín Elizalde" loading="eager"><div class="poster-label"><div class="poster-name">VALENTÍN ELIZALDE</div></div></div>
+        <div class="poster-card"><img src="images/jenni.png" alt="Jenni Rivera" loading="eager"><div class="poster-label"><div class="poster-name">JENNI RIVERA</div></div></div>
+        <div class="poster-card"><img src="images/alejandro.png" alt="Alejandro Fernández" loading="eager"><div class="poster-label"><div class="poster-name">ALEJANDRO FERNÁNDEZ</div></div></div>
+        <div class="poster-card"><img src="images/juangabriel.png" alt="Juan Gabriel" loading="eager"><div class="poster-label"><div class="poster-name">JUAN GABRIEL</div></div></div>
+        <div class="poster-card"><img src="images/intocable.png" alt="Intocable" loading="eager"><div class="poster-label"><div class="poster-name">INTOCABLE</div></div></div>
+        <div class="poster-card"><img src="images/tigres.png" alt="Los Tigres del Norte" loading="eager"><div class="poster-label"><div class="poster-name">LOS TIGRES DEL NORTE</div></div></div>
+        <div class="poster-card"><img src="images/lupillo.png" alt="Lupillo Rivera" loading="eager"><div class="poster-label"><div class="poster-name">LUPILLO RIVERA</div></div></div>
+        <div class="poster-card"><img src="images/rocio.png" alt="Rocío Dúrcal" loading="eager"><div class="poster-label"><div class="poster-name">ROCÍO DÚRCAL</div></div></div>
+        <div class="poster-card"><img src="images/limite.png" alt="Grupo Límite" loading="eager"><div class="poster-label"><div class="poster-name">GRUPO LÍMITE</div></div></div>
+        <div class="poster-card"><img src="images/machos.png" alt="Banda Machos" loading="eager"><div class="poster-label"><div class="poster-name">BANDA MACHOS</div></div></div>
+        <div class="poster-card"><img src="images/bukis.png" alt="Los Bukis" loading="eager"><div class="poster-label"><div class="poster-name">LOS BUKIS</div></div></div>
+        <div class="poster-card"><img src="images/arrolladora.png" alt="La Arrolladora" loading="eager"><div class="poster-label"><div class="poster-name">LA ARROLLADORA</div></div></div>
+        <div class="poster-card"><img src="images/chapo.png" alt="El Chapo de Sinaloa" loading="eager"><div class="poster-label"><div class="poster-name">EL CHAPO DE SINALOA</div></div></div>
+        <!-- Set 2 — clon para loop infinito -->
+        <div class="poster-card"><img src="images/valentin.png" alt="Valentín Elizalde" loading="eager"><div class="poster-label"><div class="poster-name">VALENTÍN ELIZALDE</div></div></div>
+        <div class="poster-card"><img src="images/jenni.png" alt="Jenni Rivera" loading="eager"><div class="poster-label"><div class="poster-name">JENNI RIVERA</div></div></div>
+        <div class="poster-card"><img src="images/alejandro.png" alt="Alejandro Fernández" loading="eager"><div class="poster-label"><div class="poster-name">ALEJANDRO FERNÁNDEZ</div></div></div>
+        <div class="poster-card"><img src="images/juangabriel.png" alt="Juan Gabriel" loading="eager"><div class="poster-label"><div class="poster-name">JUAN GABRIEL</div></div></div>
+        <div class="poster-card"><img src="images/intocable.png" alt="Intocable" loading="eager"><div class="poster-label"><div class="poster-name">INTOCABLE</div></div></div>
+        <div class="poster-card"><img src="images/tigres.png" alt="Los Tigres del Norte" loading="eager"><div class="poster-label"><div class="poster-name">LOS TIGRES DEL NORTE</div></div></div>
+        <div class="poster-card"><img src="images/lupillo.png" alt="Lupillo Rivera" loading="eager"><div class="poster-label"><div class="poster-name">LUPILLO RIVERA</div></div></div>
+        <div class="poster-card"><img src="images/rocio.png" alt="Rocío Dúrcal" loading="eager"><div class="poster-label"><div class="poster-name">ROCÍO DÚRCAL</div></div></div>
+        <div class="poster-card"><img src="images/limite.png" alt="Grupo Límite" loading="eager"><div class="poster-label"><div class="poster-name">GRUPO LÍMITE</div></div></div>
+        <div class="poster-card"><img src="images/machos.png" alt="Banda Machos" loading="eager"><div class="poster-label"><div class="poster-name">BANDA MACHOS</div></div></div>
+        <div class="poster-card"><img src="images/bukis.png" alt="Los Bukis" loading="eager"><div class="poster-label"><div class="poster-name">LOS BUKIS</div></div></div>
+        <div class="poster-card"><img src="images/arrolladora.png" alt="La Arrolladora" loading="eager"><div class="poster-label"><div class="poster-name">LA ARROLLADORA</div></div></div>
+        <div class="poster-card"><img src="images/chapo.png" alt="El Chapo de Sinaloa" loading="eager"><div class="poster-label"><div class="poster-name">EL CHAPO DE SINALOA</div></div></div>
       </div>
     </div>
     <p class="scroll-hint">← Desliza para ver más →</p>
