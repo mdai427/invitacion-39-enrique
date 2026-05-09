@@ -183,10 +183,10 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
   margin:12px auto;animation:fadeUp .8s .6s ease both;
 }
 .hero-photo-frame{
-  width:90px;height:90px;
+  width:130px;height:130px;
   border-radius:50%;
   overflow:hidden;
-  box-shadow:0 4px 20px rgba(0,0,0,.6);
+  box-shadow:0 4px 24px rgba(0,0,0,.7);
   flex-shrink:0;
 }
 .hero-photo-frame img{
@@ -558,8 +558,7 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
     <button id="music-toggle-btn">MIN ▼</button>
   </div>
   <div id="music-frame-wrap">
-    <iframe id="music-frame" src="" width="260" height="146" frameborder="0"
-      allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    <div id="music-frame"></div>
   </div>
 </div>
 
@@ -831,14 +830,13 @@ function openEnvelope(){
   wrap.classList.add('opening');
   seal.style.opacity='0';seal.style.transform='translate(-50%,-50%) scale(.5)';
 
-  // Start music
-  // Change this YouTube video ID to any Regional Mexicano 2000s song
-  // Example: search "Jenni Rivera La Chacalosa" on YouTube → copy the video ID from the URL
-  const VIDEO_ID = 'MpKwKkRPvxM';
-  document.getElementById('music-frame').src =
-    'https://www.youtube.com/embed/'+VIDEO_ID+
-    '?autoplay=1&controls=1&modestbranding=1&rel=0&color=white';
+  // Start music via YouTube API (autoplay real en móvil)
   document.getElementById('music-widget').style.display = 'block';
+  if(window._ytReady && window._ytPlayer){
+    window._ytPlayer.playVideo();
+  } else {
+    window._ytPlayOnReady = true;
+  }
 
   setTimeout(()=>{
     const env=document.getElementById('env-screen');
@@ -880,6 +878,33 @@ function toggleMusic(){
   musicMin = !musicMin;
   document.getElementById('music-frame-wrap').style.display = musicMin ? 'none' : 'block';
   document.getElementById('music-toggle-btn').textContent = musicMin ? 'VER ▲' : 'MIN ▼';
+}
+
+// ═══════ YOUTUBE IFRAME API ═══════
+window._ytReady = false;
+window._ytPlayer = null;
+window._ytPlayOnReady = false;
+
+(function(){
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+})();
+
+function onYouTubeIframeAPIReady(){
+  window._ytPlayer = new YT.Player('music-frame',{
+    width:'260', height:'146',
+    videoId:'MpKwKkRPvxM',
+    playerVars:{autoplay:0,controls:1,modestbranding:1,rel:0,color:'white'},
+    events:{
+      onReady: function(){
+        window._ytReady = true;
+        if(window._ytPlayOnReady){
+          window._ytPlayer.playVideo();
+        }
+      }
+    }
+  });
 }
 
 // ═══════ SONGS ═══════
