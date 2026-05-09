@@ -105,6 +105,78 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
 }
 @keyframes hint-pulse{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
 
+/* Floating hand on envelope */
+.env-hand{
+  position:absolute;
+  bottom:14%;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  pointer-events:none;z-index:20;
+  animation:hand-float 1.5s ease-in-out infinite;
+}
+.env-hand-emoji{font-size:2rem;filter:drop-shadow(0 2px 10px rgba(0,0,0,.7));}
+.env-hand-label{
+  font-family:'Oswald',sans-serif;font-size:.72rem;letter-spacing:2px;
+  color:#fff;text-transform:uppercase;white-space:nowrap;
+  background:rgba(0,0,0,.6);border-radius:20px;padding:3px 12px;
+  border:1px solid rgba(212,175,55,.55);
+}
+@keyframes hand-float{
+  0%,100%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(-9px);}
+}
+.opening .env-hand{opacity:0;transition:opacity .25s;}
+
+/* Location card in hero */
+.hero-location{
+  margin-top:14px;
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  width:100%;
+}
+.hero-venue-name{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.72rem,2.6vw,.9rem);
+  color:var(--gold);letter-spacing:2px;
+  text-align:center;
+  text-shadow:0 0 18px rgba(212,175,55,.45);
+}
+.hero-venue-addr{
+  font-family:'Oswald',sans-serif;
+  font-size:clamp(.6rem,2vw,.72rem);
+  color:rgba(255,255,255,.55);
+  text-align:center;
+  max-width:min(300px,88vw);
+  line-height:1.45;
+}
+.hero-map-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,rgba(212,175,55,.18),rgba(212,175,55,.06));
+  border:1.5px solid var(--gold);
+  border-radius:30px;
+  padding:9px 22px;
+  color:var(--gold);
+  font-family:'Oswald',sans-serif;
+  font-size:.82rem;letter-spacing:2px;text-transform:uppercase;
+  text-decoration:none;
+  transition:background .3s,transform .2s,box-shadow .3s;
+  box-shadow:0 0 18px rgba(212,175,55,.15);
+  margin-top:4px;
+}
+.hero-map-btn:hover{background:rgba(212,175,55,.28);transform:translateY(-2px);box-shadow:0 4px 24px rgba(212,175,55,.3);}
+.hero-map-btn:active{transform:scale(.97);}
+.hero-map-btn svg{flex-shrink:0;}
+
+/* Photo in success overlay */
+.suc-photo{
+  width:min(180px,52vw);
+  border-radius:14px;
+  overflow:hidden;
+  border:3px solid var(--gold);
+  box-shadow:0 8px 40px rgba(0,0,0,.8),0 0 30px rgba(212,175,55,.2);
+  margin-bottom:18px;
+}
+.suc-photo img{width:100%;height:auto;display:block;}
+
 /* Floating music player — modo discreto */
 #music-widget{
   display:none;position:fixed;bottom:20px;right:16px;z-index:8000;
@@ -538,6 +610,12 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
       <div class="peek-line"></div>
       <div class="peek-text">23 de Mayo · Manzanillo</div>
     </div>
+
+    <!-- Floating hand hint -->
+    <div class="env-hand" id="env-hand">
+      <div class="env-hand-emoji">👆</div>
+      <div class="env-hand-label">¡Clic aquí!</div>
+    </div>
   </div>
 
   <p class="tap-hint">✉️ &nbsp;Toca para Abrir tu Invitación</p>
@@ -594,6 +672,16 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
           <span class="info-label">Colima</span>
           <span class="info-val">🌊</span>
         </div>
+      </div>
+
+      <!-- Venue & Location -->
+      <div class="hero-location">
+        <div class="hero-venue-name">🏡 MARE JARDÍN DE EVENTOS</div>
+        <div class="hero-venue-addr">Blvd. Miguel de la Madrid 3157, Playa Azul Salagua, Manzanillo, Col.</div>
+        <a class="hero-map-btn" href="https://www.google.com/maps/dir/MARE+JARD%C3%8DN+DE+EVENTOS,+Blvd.+Miguel+de+la+Madrid+3157,+Playa+Azul+Salagua,+28218+Manzanillo,+Col./MARE+JARD%C3%8DN+DE+EVENTOS,+Blvd.+Miguel+de+la+Madrid+3157,+Playa+Azul+Salagua,+28218+Manzanillo,+Col./@19.1075427,-104.3443728,15z/data=!4m13!4m12!1m5!1m1!1s0x8424d5d9af0a45e5:0x58f818bbca1271eb!2m2!1d-104.3152602!2d19.0915009!1m5!1m1!1s0x8424d5d9af0a45e5:0x58f818bbca1271eb!2m2!1d-104.3152602!2d19.0915009?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Ver Ubicación del Evento
+        </a>
       </div>
     </div>
     <div class="scroll-down">
@@ -770,6 +858,9 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
 
 <!-- SUCCESS OVERLAY -->
 <div class="success-overlay" id="suc-overlay">
+  <div class="suc-photo">
+    <img src="images/enrique-foto.jpg" alt="Enrique">
+  </div>
   <div class="suc-icon">🎉</div>
   <div class="suc-title">¡Gracias!</div>
   <div class="suc-text" id="suc-text"></div>
