@@ -105,30 +105,22 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
 }
 @keyframes hint-pulse{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
 
-/* Floating music player */
+/* Floating music player — modo discreto */
 #music-widget{
-  display:none;position:fixed;bottom:16px;right:16px;z-index:8000;
-  background:#110800;border:2px solid var(--gold);border-radius:14px;
-  overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.7);width:260px;
-  animation:fadeIn .5s ease;
+  display:none;position:fixed;bottom:20px;right:16px;z-index:8000;
 }
 #music-widget-bar{
-  background:linear-gradient(90deg,#1a0a02,#2a1205);
-  padding:9px 12px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(212,175,55,.3);cursor:pointer;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(9,5,2,.88);border:1.5px solid rgba(212,175,55,.55);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.25rem;
+  box-shadow:0 2px 14px rgba(0,0,0,.6);backdrop-filter:blur(4px);
+  animation:badge-glow 3s ease-in-out infinite;
 }
-#music-widget-bar span{
-  color:var(--gold-l);font-size:.78rem;font-family:'Oswald',sans-serif;
-  letter-spacing:1px;font-weight:600;
+#music-frame-wrap{
+  position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;
 }
-#music-toggle-btn{
-  background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.4);
-  color:var(--gold);border-radius:6px;padding:3px 9px;font-size:.72rem;
-  cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:1px;
-  transition:background .2s;
-}
-#music-toggle-btn:hover{background:rgba(212,175,55,.3);}
-#music-frame-wrap iframe{display:block;width:260px;height:146px;border:none;}
+#music-toggle-btn{display:none;}
 
 /* ═══════════════════════════════════════
    MAIN INVITATION
@@ -190,7 +182,7 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
   flex-shrink:0;
 }
 .hero-photo-frame img{
-  width:100%;height:100%;display:block;object-fit:cover;object-position:top;
+  width:100%;height:100%;display:block;object-fit:cover;object-position:center 15%;
 }
 .hero-te-invita{
   font-family:'Dancing Script',cursive;
@@ -238,16 +230,16 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
 .badge-lbl{font-size:.55rem;letter-spacing:3px;color:var(--gold-l);text-transform:uppercase;}
 
 .hero-info-strip{
-  display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:nowrap;
+  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:nowrap;
   background:rgba(0,0,0,.6);
   border:1px solid rgba(212,175,55,.3);
   border-radius:40px;
-  padding:14px 28px;
+  padding:10px 16px;
   margin:16px auto 0;
-  max-width:min(600px,92vw);
-  white-space:nowrap;
+  max-width:min(500px,96vw);
   animation:fadeUp .8s .75s ease both;
   backdrop-filter:blur(6px);
+  overflow:hidden;
 }
 .info-item{text-align:center;display:flex;flex-direction:column;align-items:center;}
 .info-label{font-size:.85rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:block;}
@@ -553,10 +545,7 @@ html,body{height:100%;overflow-x:hidden;background:#090502;}
 
 <!-- FLOATING MUSIC PLAYER -->
 <div id="music-widget">
-  <div id="music-widget-bar" onclick="toggleMusic()">
-    <span>🎵 &nbsp;ÉXITOS REGIONALES 2000's</span>
-    <button id="music-toggle-btn">MIN ▼</button>
-  </div>
+  <div id="music-widget-bar" onclick="toggleMusic()" title="Música">🎵</div>
   <div id="music-frame-wrap">
     <div id="music-frame"></div>
   </div>
@@ -893,7 +882,7 @@ window._ytPlayOnReady = false;
 
 function onYouTubeIframeAPIReady(){
   window._ytPlayer = new YT.Player('music-frame',{
-    width:'260', height:'146',
+    width:'1', height:'1',
     videoId:'MpKwKkRPvxM',
     playerVars:{autoplay:0,controls:1,modestbranding:1,rel:0,color:'white'},
     events:{
